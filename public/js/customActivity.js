@@ -55,7 +55,7 @@ define(["postmonger"], function (Postmonger) {
     if (data) {
       payload = data;
     }
-
+    console.log(data);
     var message;
     var hasInArguments = Boolean(
       payload["arguments"] &&
