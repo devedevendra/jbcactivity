@@ -29,21 +29,21 @@
           "foundSignupDate": ""
         }
       ],
-      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/execute"
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/journeybuilder/execute"
     }
   },
   "configurationArguments": {
     "save": {
-      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/save"
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/journeybuilder/save"
     },
     "publish": {
-      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/publish"
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/journeybuilder/publish"
     },
     "validate": {
-      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/validate"
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/journeybuilder/validate"
     },
     "stop": {
-      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/stop"
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/journeybuilder/stop"
     }
   },
   "wizardSteps": [
