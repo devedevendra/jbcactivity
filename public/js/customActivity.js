@@ -3,7 +3,7 @@ define(["postmonger"], function (Postmonger) {
 
   var connection = new Postmonger.Session();
   var payload = {};
-  var lastStepEnabled = false;
+  var lastStepEnabled = true;
   var steps = [
     // initialize to the same value as what's set in config.json for consistency
     { label: "Step 1", key: "step1" },
@@ -78,16 +78,13 @@ define(["postmonger"], function (Postmonger) {
 
     // If there is no message selected, disable the next button
     if (!message) {
-      showStep(null, 1);
-      connection.trigger("updateButton", { button: "next", enabled: false });
+      message='PCM';
+      //connection.trigger("updateButton", { button: "next", enabled: false });
       // If there is a message, skip to the summary step
     } else {
-      $("#select1")
-        .find("option[value=" + message + "]")
-        .attr("selected", "selected");
-      //$("#message").html(message);
-      showStep(null, 3);
+     
     }
+    save();
   }
 
   function onGetTokens(tokens) {
@@ -179,10 +176,13 @@ define(["postmonger"], function (Postmonger) {
     }
   }
 
+
+  
+
   function save() {
     //var name = $("#select1").find("option:selected").html();
     var value = getMessage();
-
+    console.log('we can do callouts from here');
     // 'payload' is initialized on 'initActivity' above.
     // Journey Builder sends an initial payload with defaults
     // set by this activity's config.json file.  Any property
