@@ -1,30 +1,49 @@
 {
   "workflowApiVersion": "1.1",
   "metaData": {
-    "icon": "pcmlogo.png",
+    "icon": "images/pcmlogo.png",
     "category": "message"
   },
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "Custom API Activity",
-      "description": "Sends data to an external API"
+      "name": "REST Activity with Input Field",
+      "description": "A REST activity that includes a text input mapped from a Data Extension."
     }
   },
   "arguments": {
     "execute": {
       "inArguments": [
-        { "SubscriberKey": "{{Contact.Key}}" },
-        { "Name": "{{Contact.Attribute.ContactList.Name}}" },
-        
-        { "Email": "{{Contact.Attribute.DEName.Email}}" }
+        { "emailAddress": "{{InteractionDefaults.Email}}" },
+        { "phoneNumber": "{{Contact.Default.PhoneNumber}}" },
+        { "customField": "" }
       ],
-      "outArguments": [],
-      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/process",
-      "verb": "POST",
-      "body": "{{Journey.Data}}",
-      "header": {
-        "Content-Type": "application/json"
+      "outArguments": [
+        { "foundSignupDate": "" }
+      ],
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/execute"
+    }
+  },
+  "configurationArguments": {
+    "save": {
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/save"
+    },
+    "publish": {
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/publish"
+    },
+    "validate": {
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/validate"
+    },
+    "stop": {
+      "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/stop"
+    }
+  },
+  "schema": {
+    "arguments": {
+      "execute": {
+        "inArguments": [
+          { "customField": { "dataType": "Text", "isNullable": false, "direction": "in" } }
+        ]
       }
     }
   }
