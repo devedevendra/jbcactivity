@@ -7,19 +7,27 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "REST Activity with Input Field",
-      "description": "A REST activity that includes a text input mapped from a Data Extension."
+      "name": "REST Activity (Workflow API v1.1)",
+      "description": "An example REST activity using workflow API v1.1 format."
     }
   },
   "arguments": {
     "execute": {
       "inArguments": [
-        { "emailAddress": "{{InteractionDefaults.Email}}" },
-        { "phoneNumber": "{{Contact.Default.PhoneNumber}}" },
-        { "customField": "" }
+        {
+          "emailAddress": "{{InteractionDefaults.Email}}"
+        },
+        {
+          "phoneNumber": "{{Contact.Default.PhoneNumber}}"
+        },
+        {
+          "customField": "{{Contact.DataExtension.CustomField}}"
+        }
       ],
       "outArguments": [
-        { "foundSignupDate": "" }
+        {
+          "foundSignupDate": ""
+        }
       ],
       "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/execute"
     }
@@ -38,11 +46,53 @@
       "url": "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/stop"
     }
   },
+  "wizardSteps": [
+    { "label": "Step 1", "key": "step1" },
+    { "label": "Step 2", "key": "step2" },
+    { "label": "Step 3", "key": "step3" },
+    { "label": "Step 4", "key": "step4", "active": false }
+  ],
+  "userInterfaces": {
+    "configModal": {
+      "height": 200,
+      "width": 300,
+      "fullscreen": true
+    }
+  },
   "schema": {
     "arguments": {
       "execute": {
         "inArguments": [
-          { "customField": { "dataType": "Text", "isNullable": false, "direction": "in" } }
+          {
+            "phoneNumber": {
+              "dataType": "Phone",
+              "isNullable": false,
+              "direction": "in"
+            }
+          },
+          {
+            "emailAddress": {
+              "dataType": "Email",
+              "isNullable": false,
+              "direction": "in"
+            }
+          },
+          {
+            "customField": {
+              "dataType": "Text",
+              "isNullable": true,
+              "direction": "in"
+            }
+          }
+        ],
+        "outArguments": [
+          {
+            "foundSignupDate": {
+              "dataType": "Date",
+              "direction": "out",
+              "access": "visible"
+            }
+          }
         ]
       }
     }
