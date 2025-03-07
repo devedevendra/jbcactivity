@@ -38,7 +38,7 @@ define(["postmonger"], function (Postmonger) {
         enabled: Boolean(message),
       });
 
-      $("#message").html(message);
+      //$("#message").html(message);
     });
 
     // Toggle step 4 active/inactive
@@ -85,7 +85,7 @@ define(["postmonger"], function (Postmonger) {
       $("#select1")
         .find("option[value=" + message + "]")
         .attr("selected", "selected");
-      $("#message").html(message);
+      //$("#message").html(message);
       showStep(null, 3);
     }
   }
@@ -180,14 +180,14 @@ define(["postmonger"], function (Postmonger) {
   }
 
   function save() {
-    var name = $("#select1").find("option:selected").html();
+    //var name = $("#select1").find("option:selected").html();
     var value = getMessage();
 
     // 'payload' is initialized on 'initActivity' above.
     // Journey Builder sends an initial payload with defaults
     // set by this activity's config.json file.  Any property
     // may be overridden as desired.
-    payload.name = name;
+    payload.name = 'TESTPCM';
 
     payload["arguments"].execute.inArguments = [{ message: value }];
 
@@ -197,6 +197,6 @@ define(["postmonger"], function (Postmonger) {
   }
 
   function getMessage() {
-    return $("#select1").find("option:selected").attr("value").trim();
+    return 'TestMessage200';//$("#select1").find("option:selected").attr("value").trim();
   }
 });
