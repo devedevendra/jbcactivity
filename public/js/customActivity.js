@@ -3,33 +3,15 @@ define(["postmonger"], function (Postmonger) {
 
   var connection = new Postmonger.Session();
   var payload = {};
-  var lastStepEnabled = false;
-  var steps = [
-    { label: "Step 1", key: "step1" },
-    { label: "Step 2", key: "step2" },
-    { label: "Step 3", key: "step3" },
-    { label: "Step 4", key: "step4", active: false },
-  ];
-  var currentStep = steps[0].key;
 
   $(window).ready(onRender);
 
   connection.on("initActivity", initialize);
-  connection.on("clickedNext", onClickedNext);
-  connection.on("clickedBack", onClickedBack);
-  connection.on("gotoStep", onGotoStep);
 
   function onRender() {
     connection.trigger("ready");
     connection.trigger("requestTokens");
     connection.trigger("requestEndpoints");
-
-    $("#customField").on("input", function () {
-      connection.trigger("updateButton", {
-        button: "next",
-        enabled: Boolean($("#customField").val().trim()),
-      });
-    });
   }
 
   function initialize(data) {
@@ -37,65 +19,28 @@ define(["postmonger"], function (Postmonger) {
       payload = data;
     }
 
-    var inArguments =
-      payload["arguments"]?.execute?.inArguments || [];
+    // Directly make the callout when the activity is initialized
+    makeCallout();
+  }
 
-    $.each(inArguments, function (index, inArgument) {
-      if (inArgument.customField) {
-        $("#customField").val(inArgument.customField);
+  function makeCallout() {
+    var url = "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/journeybuilder/execute";
+
+    // Perform the REST callout to the external endpoint
+    $.ajax({
+      url: url,
+      method: "POST",
+      contentType: "application/json",
+      dataType: "json",
+      data: JSON.stringify({ /* No input needed, send an empty payload or relevant data */ }),
+      success: function(response) {
+        // Handle the response if needed
+        console.log("Callout successful", response);
+      },
+      error: function(xhr, status, error) {
+        // Handle errors if needed
+        console.error("Error during callout", error);
       }
     });
-
-    connection.trigger("updateButton", {
-      button: "next",
-      enabled: Boolean($("#customField").val().trim()),
-    });
-  }
-
-  function onClickedNext() {
-    if (currentStep.key === "step3" || currentStep.key === "step4") {
-      save();
-    } else {
-      connection.trigger("nextStep");
-    }
-  }
-
-  function onClickedBack() {
-    connection.trigger("prevStep");
-  }
-
-  function onGotoStep(step) {
-    showStep(step);
-    connection.trigger("ready");
-  }
-
-  function showStep(step) {
-    currentStep = step;
-    $(".step").hide();
-
-    switch (currentStep.key) {
-      case "step1":
-        $("#step1").show();
-        break;
-      case "step2":
-        $("#step2").show();
-        break;
-      case "step3":
-        $("#step3").show();
-        break;
-      case "step4":
-        $("#step4").show();
-        break;
-    }
-  }
-
-  function save() {
-    payload["arguments"].execute.inArguments = [
-      { customField: $("#customField").val().trim() }
-    ];
-
-    payload["metaData"].isConfigured = true;
-
-    connection.trigger("updateActivity", payload);
   }
 });
