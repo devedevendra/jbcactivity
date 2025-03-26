@@ -5,23 +5,7 @@
     <meta charset="utf-8" />
     <title>Custom Journey Builder Activity</title>
 
-    <script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-  crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js" integrity="sha512-J5ha2LF4Le+PBQnI5+xAVJDR+sZG9uSgroy4n/A6TLjNkvYQbqZA8WHZdaOvJ0HiKkBC9Frmvs10rFDSHKmveQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript">
-      (function () {
-       var config = {
-          baseUrl: "https://sfmc-example-jb-custom-activity-3mrh.onrender.com/js"
-        };
-
-
-        var dependencies = ["customActivity"];
-
-        require(config, dependencies);
-      })();
-    </script>
+    
 
     <!--Styles-->
     <style type="text/css">
@@ -37,29 +21,42 @@
       }
     </style>
   </head>
-  <body> Test Rest Activity
-    <!--div id="step1" class="step">
-      Test Rest Activity
-      <select id="select1">
-        <option value="">Select an option</option>
-        <option value="someMessage">Some SMS</option>
-        <option value="anotherMessage">Another SMS</option>
-        <option value="thirdMessage">Third SMS</option>
-        <option value="unknownMessage">Unknown SMS</option>
-      </select>
+  <body>
+    <div class="container mt-4">
+        <h2>Contact Name Input</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="contactName">Contact Name:</label>
+                <input type="text" class="form-control" id="contactName" name="contactName" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
 
-      <button id="toggleLastStep">Toggle Last Step</button>
-    </div>
-    <div id="step2" class="step">
-      Here's a second page with some info on it.
-    </div>
-    <div id="step3" class="step">
-      You chose the message:
-      <div id="message"></div>
-    </div>
-    <div id="step4" class="step">
-      Hey, here's a fourth step, just for you. Toggle this on or off from step
-      1.
-    </div-->
-  </body>
+    <script src="https://unpkg.com/@salesforce-ux/design-system/assets/js/slds.js"></script>
+    <script>
+        // Initialize Journey Builder
+        document.addEventListener('DOMContentLoaded', function() {
+            window.postMessage({ 
+                ready: true 
+            }, '*');
+        });
+
+        // Handle form submission
+        $('#contactForm').submit(function(e) {
+            e.preventDefault();
+            const contactName = $('#contactName').val();
+            
+            const payload = {
+                contactName: contactName
+            };
+
+            window.postMessage({
+                save: {
+                    config: payload
+                }
+            }, '*');
+        });
+    </script>
+</body>
 </html>
